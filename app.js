@@ -11,9 +11,10 @@ const main = async () => {
 
 
     do {
+        // se espera respuesta de Mostrar Menu y luego se guarda la salida de la función en opt.
         opt = await mostrarMenu();
         console.log({ opt });
-
+        //si opt no es igual '0' entonces, se espera respuesta de pausa();
         if (opt !== '0') await pausa();
     } while (opt !== '0');
 
