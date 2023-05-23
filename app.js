@@ -1,6 +1,7 @@
 require('colors');
 
 const { inquirerMenu, pausa, confirmacion } = require('./helpers/inquirer');
+const Tareas = require('./models/tareas');
 
 console.clear();
 
@@ -16,6 +17,7 @@ const main = async () => {
         opt = await inquirerMenu();
         //si opt no es igual '0' entonces, se espera respuesta de pausa();
         console.log({ opt });
+
         if (opt !== '0') {
             await pausa();
         }
