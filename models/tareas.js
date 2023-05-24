@@ -7,6 +7,19 @@ const Tarea = require("./tarea");
 
 class Tareas {
     _listado = {};
+
+    get listadoArr() {
+        const listado = [];
+
+        // return Object.values(this._listado) Esto es lo mismo;
+        Object.keys(this._listado).forEach(key => {
+            const tarea = this._listado[key];
+            listado.push(tarea);
+        })
+
+        return listado;
+    }
+
     constructor() {
         this._listado = {};
     }
