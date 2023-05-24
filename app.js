@@ -32,7 +32,7 @@ const main = async () => {
         if (opt !== '0') {
             await pausa();
         }
-        console.clear()
+        console.clear();
         if (opt === '0') {
             confirmar = await confirmacion();
         };
