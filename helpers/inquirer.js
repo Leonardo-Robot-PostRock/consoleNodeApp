@@ -37,7 +37,7 @@ const preguntas = [
             },
         ]
     }
-]
+];
 
 const enter = [
     {
@@ -55,7 +55,7 @@ const enter = [
             }
         ]
     }
-]
+];
 
 const pregunta = [
     {
@@ -63,7 +63,7 @@ const pregunta = [
         name: 'continuar',
         message: `Presion ${'ENTER'.green} para continuar`,
     }
-]
+];
 
 const inquirerMenu = async () => {
     console.clear();
@@ -78,12 +78,12 @@ const inquirerMenu = async () => {
 
 const pausa = async () => {
     console.log('\n');
-    await inquirer.prompt(pregunta)
+    await inquirer.prompt(pregunta);
 }
 
 const confirmacion = async () => {
     console.log('\n');
-    const { confirmar } = await inquirer.prompt(enter)
+    const { confirmar } = await inquirer.prompt(enter);
     return confirmar;
 }
 
