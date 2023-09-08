@@ -6,7 +6,7 @@ const {
 	confirmacion,
 	leerInput,
 } = require('./helpers/inquirer');
-const { saveDB } = require('./helpers/saveFile');
+const { saveDB, readDB } = require('./helpers/saveFile');
 const Tareas = require('./models/tareas');
 
 console.clear();
@@ -15,6 +15,12 @@ const main = async () => {
 	let opt = '';
 	let confirmar = '';
 	const tareas = new Tareas();
+
+	const todosDB = readDB();
+
+	if (todosDB) {
+	}
+	await pausa();
 
 	do {
 		// se espera respuesta de inquirer Menu y luego se guarda la salida de la función en opt.
