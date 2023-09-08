@@ -4,9 +4,14 @@
  */
 
 const Tarea = require('./tarea');
+require('colors');
 
 class Tareas {
 	_listado = {};
+
+	constructor() {
+		this._listado = {};
+	}
 
 	get listadoArr() {
 		const listado = [];
@@ -20,10 +25,6 @@ class Tareas {
 		return listado;
 	}
 
-	constructor() {
-		this._listado = {};
-	}
-
 	cargarTareasFromArr = (tareas = []) => {
 		tareas.forEach((tarea) => {
 			this._listado[tarea.id] = tarea;
@@ -33,6 +34,21 @@ class Tareas {
 	crearTarea(desc = '') {
 		const tarea = new Tarea(desc);
 		this._listado[tarea.id] = tarea;
+	}
+
+	listadoCompleto() {
+		// Todo:
+		//1. Alma :: Completada | Pendiente
+		//2. Realidad :: Completada | Pendiente
+		//3. Poder :: Completada | Pendiente
+
+		this.listadoArr.forEach((tarea, i) => {
+			const id = `${i + 1}.`.green;
+			const { desc, completadoEn } = tarea;
+			const estado = completadoEn ? 'Completado'.green : 'Pendiente'.red;
+
+			console.log(`${id} ${desc} :: ${estado}`);
+		});
 	}
 }
 
