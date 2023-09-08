@@ -16,7 +16,7 @@ const readDB = () => {
 
 	console.log(data);
 
-	return null;
+	return data;
 };
 
 module.exports = {
