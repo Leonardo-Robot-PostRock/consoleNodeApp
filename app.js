@@ -19,8 +19,8 @@ const main = async () => {
 	const todosDB = readDB();
 
 	if (todosDB) {
+		tareas.cargarTareasFromArr(todosDB);
 	}
-	await pausa();
 
 	do {
 		// se espera respuesta de inquirer Menu y luego se guarda la salida de la función en opt.
