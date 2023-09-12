@@ -2,10 +2,11 @@ require('colors');
 
 const {
 	inquirerMenu,
-	pausa,
-	confirmacion,
+	pause,
+	confirm,
 	leerInput,
 	listadoTareasBorrar,
+	confirmDelete,
 } = require('./helpers/inquirer');
 const { saveDB, readDB } = require('./helpers/saveFile');
 const Tareas = require('./models/tareas');
@@ -44,7 +45,14 @@ const main = async () => {
 				break;
 			case '6':
 				const id = await listadoTareasBorrar(tareas.listadoArr);
-				console.log({ id });
+				const ok = await confirmDelete('¿Está seguro?');
+
+				if (id !== '0') {
+					if (ok) {
+						tareas.borrarTarea(id);
+						console.log('Tarea borrada');
+					}
+				}
 				break;
 			default:
 				break;
@@ -52,13 +60,13 @@ const main = async () => {
 
 		saveDB(tareas.listadoArr);
 
-		//si opt no es igual '0' entonces, se espera respuesta de pausa();
+		//si opt no es igual '0' entonces, se espera respuesta de pause();
 		if (opt !== '0') {
-			await pausa();
+			await pause();
 		}
 		console.clear();
 		if (opt === '0') {
-			confirmar = await confirmacion();
+			confirmar = await confirm();
 		}
 	} while (opt !== '0' || confirmar === 'no');
 };

@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 require('colors');
 
+//Elegir operación a realizar
+
 const preguntas = [
 	{
 		type: 'list',
@@ -39,6 +41,8 @@ const preguntas = [
 	},
 ];
 
+//Opciones para salir de la app
+
 const enter = [
 	{
 		type: 'list',
@@ -56,6 +60,8 @@ const enter = [
 		],
 	},
 ];
+
+//continuar la operación
 
 const pregunta = [
 	{
@@ -76,12 +82,12 @@ const inquirerMenu = async () => {
 	return opcion;
 };
 
-const pausa = async () => {
+const pause = async () => {
 	console.log('\n');
 	await inquirer.prompt(pregunta);
 };
 
-const confirmacion = async () => {
+const confirm = async () => {
 	console.log('\n');
 	const { confirmar } = await inquirer.prompt(enter);
 	return confirmar;
@@ -109,10 +115,16 @@ const leerInput = async (message) => {
 const listadoTareasBorrar = async (tareas = []) => {
 	const choices = tareas.map((tarea, i) => {
 		const index = `${i + 1}.`.green;
+
 		return {
 			value: tarea.id, // Aquí se establece el valor del ID de la tarea
 			name: `${index} ${tarea.desc}`,
 		};
+	});
+
+	choices.unshift({
+		value: '0',
+		name: '0'.green + ' Cancelar',
 	});
 
 	const preguntas = [
@@ -129,10 +141,24 @@ const listadoTareasBorrar = async (tareas = []) => {
 	return id;
 };
 
+const confirmDelete = async (message) => {
+	const question = [
+		{
+			type: 'confirm',
+			name: 'ok',
+			message,
+		},
+	];
+
+	const { ok } = await inquirer.prompt(question);
+	return ok;
+};
+
 module.exports = {
-	confirmacion,
+	confirm,
+	confirmDelete,
 	inquirerMenu,
 	leerInput,
 	listadoTareasBorrar,
-	pausa,
+	pause,
 };
