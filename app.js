@@ -1,12 +1,13 @@
 require('colors');
 
 const {
-	inquirerMenu,
-	pause,
 	confirm,
-	readInput,
 	confirmDelete,
+	inquirerMenu,
 	listDeleteTasks,
+	pause,
+	readInput,
+	showChecklist,
 } = require('./helpers/inquirer');
 const { saveDB, readDB } = require('./helpers/saveFile');
 const Tareas = require('./models/tasks');
@@ -34,15 +35,24 @@ const main = async () => {
 				const desc = await readInput('Descripción: ');
 				tasks.createTask(desc);
 				break;
+
 			case '2':
 				tasks.completeList();
 				break;
+
 			case '3':
 				tasks.listCompletedPending(true);
 				break;
+
 			case '4':
 				tasks.listCompletedPending(false);
 				break;
+
+			case '5':
+				const ids = await showChecklist(tasks.arrayListing);
+				console.log(ids);
+				break;
+
 			case '6':
 				const id = await listDeleteTasks(tasks.arrayListing);
 				const ok = await confirmDelete('¿Está seguro?');
@@ -54,6 +64,7 @@ const main = async () => {
 					}
 				}
 				break;
+
 			default:
 				break;
 		}
