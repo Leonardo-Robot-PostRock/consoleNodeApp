@@ -4,24 +4,24 @@ const {
 	inquirerMenu,
 	pause,
 	confirm,
-	leerInput,
-	listadoTareasBorrar,
+	readInput,
 	confirmDelete,
+	listDeleteTasks,
 } = require('./helpers/inquirer');
 const { saveDB, readDB } = require('./helpers/saveFile');
-const Tareas = require('./models/tareas');
+const Tareas = require('./models/tasks');
 
 console.clear();
 
 const main = async () => {
 	let opt = '';
-	let confirmar = '';
-	const tareas = new Tareas();
+	let confirmOption = '';
+	const tasks = new Tareas();
 
 	const todosDB = readDB();
 
 	if (todosDB) {
-		tareas.cargarTareasFromArr(todosDB);
+		tasks.loadTasksFromArray(todosDB);
 	}
 
 	do {
@@ -31,25 +31,25 @@ const main = async () => {
 		switch (opt) {
 			case '1':
 				//crear opcion
-				const desc = await leerInput('Descripción: ');
-				tareas.crearTarea(desc);
+				const desc = await readInput('Descripción: ');
+				tasks.createTask(desc);
 				break;
 			case '2':
-				tareas.listadoCompleto();
+				tasks.completeList();
 				break;
 			case '3':
-				tareas.listarCompletadasPendientes(true);
+				tasks.listCompletedPending(true);
 				break;
 			case '4':
-				tareas.listarCompletadasPendientes(false);
+				tasks.listCompletedPending(false);
 				break;
 			case '6':
-				const id = await listadoTareasBorrar(tareas.listadoArr);
+				const id = await listDeleteTasks(tasks.arrayListing);
 				const ok = await confirmDelete('¿Está seguro?');
 
 				if (id !== '0') {
 					if (ok) {
-						tareas.borrarTarea(id);
+						tasks.deleteTask(id);
 						console.log('Tarea borrada');
 					}
 				}
@@ -58,7 +58,7 @@ const main = async () => {
 				break;
 		}
 
-		saveDB(tareas.listadoArr);
+		saveDB(tasks.arrayListing);
 
 		//si opt no es igual '0' entonces, se espera respuesta de pause();
 		if (opt !== '0') {
@@ -66,9 +66,9 @@ const main = async () => {
 		}
 		console.clear();
 		if (opt === '0') {
-			confirmar = await confirm();
+			confirmOption = await confirm();
 		}
-	} while (opt !== '0' || confirmar === 'no');
+	} while (opt !== '0' || confirmOption === 'no');
 };
 
 main();
