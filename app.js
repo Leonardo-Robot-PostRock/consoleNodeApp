@@ -50,7 +50,7 @@ const main = async () => {
 
 			case '5':
 				const ids = await showChecklist(tasks.arrayListing);
-				console.log(ids);
+				tasks.toggleCompleted(ids);
 				break;
 
 			case '6':
